@@ -14,6 +14,13 @@ const Home: React.FC = () => {
       .catch((error) => console.error('Error fetching environment variables:', error));
   }, []);
 
+  useEffect(() => {
+    fetch('/api/log-secret')
+      .then((response) => response.json())
+      .then((data) => console.log(data.message))
+      .catch((error) => console.error('Error logging SECRET_KEY:', error));
+  }, []);
+
   if (nextPublicEmail === null || email === null) {
     return <div>Loading...</div>;
   }
@@ -22,6 +29,7 @@ const Home: React.FC = () => {
     <div>
       <h1>NEXT_PUBLIC_EMAIL: {nextPublicEmail}</h1>
       <h1>EMAIL: {email}</h1>
+      <h1>Check the server console for SECRET_KEY</h1>
     </div>
   );
 };

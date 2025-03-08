@@ -2,10 +2,11 @@ version: '3.8'
 
 services:
   web:
-    image: my-next-app:latest
+    image: my-next-app:latest # 指定要運行的 image
     ports:
       - "3000:3000"
     env_file:
-      - stack.env
+      - stack.env # 這邊是 portainer 的環境變數名稱
     environment:
       NODE_ENV: production
+      SECRET_KEY: stack-secret-value # 預計要使用的 非 NEXT_PUBLIC 變數
