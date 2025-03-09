@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   web:
@@ -9,4 +9,3 @@ services:
       - stack.env # 這邊是 portainer 的環境變數名稱
     environment:
       NODE_ENV: production
-      SECRET_KEY: stack-secret-value # 預計要使用的 非 NEXT_PUBLIC 變數
