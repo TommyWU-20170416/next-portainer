@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  web:
+    image: my-next-app:latest # 指定要運行的 image
+    ports:
+      - "3000:3000"
+    env_file:
+      - stack.env # 這邊是 portainer 的環境變數檔案名稱
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_EMAIL: NEXT_PUBLIC_EMAIL_local_email
+      email: local_email

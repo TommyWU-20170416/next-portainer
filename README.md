@@ -138,3 +138,7 @@ This project is licensed under the MIT License.
 2. 編輯後點選 `Update the stack` 就會重新部署
 3. 此時檢查是否網站有更新修改的環境變數
 4. 可以發現到 `沒有 NEXT_PUBLIC` 的有正常改變到
+
+#### 部署 portainer + stack.env 環境變數修改 + stack.yml 環境變數
+1. 根據上面的 `部署 portainer + stack.env 環境變數修改` 接著在 docker-compose 添加環境變數 [docker-compose-portainer-with-api-router-and-env.yml](docker-compose-portainer-with-api-router-and-env.yml) 就可更新
+3. 順序是 portainer 的 stack > stack.env > .env
