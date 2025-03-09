@@ -91,7 +91,7 @@ This project is licensed under the MIT License.
         environment:
           NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
     ```
-  > :no_good: 缺點：僅限於本地去運作，因為 portainer 內的 stack 是在 docker 內，不像是在本地運行，都可以看到所有的資料夾，必須要上傳到 portainer 的 docker 內，或是指定 git repo url 也行。[連結](https://portal.portainer.io/knowledge/can-i-build-an-image-while-deploying-a-stack/application-from-git)
+  > :no_good: 缺點：僅限於本地去運作，因為 portainer 內的 stack 是在 docker 內，不像是在本地運行，都可以看到所有的資料夾，必須要上傳到 portainer 的 docker 內，也許未來可指定 git repo url。[連結](https://portal.portainer.io/knowledge/can-i-build-an-image-while-deploying-a-stack/application-from-git)
 
 
 ### 使用 portainer
