@@ -91,14 +91,50 @@ This project is licensed under the MIT License.
         environment:
           NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
     ```
-  > 缺點：僅限於本地去運作，因為 portainer 內的 stack 是在 docker 內，不像是在本地運行，都可以看到所有的資料夾，必須要上傳到 portainer 的 docker 內，或是指定 git repo url 也行
+  > :no_good: 缺點：僅限於本地去運作，因為 portainer 內的 stack 是在 docker 內，不像是在本地運行，都可以看到所有的資料夾，必須要上傳到 portainer 的 docker 內，或是指定 git repo url 也行。[連結](https://portal.portainer.io/knowledge/can-i-build-an-image-while-deploying-a-stack/application-from-git)
 
-### 使用 PORTAINER
+
+### 使用 portainer
 
 > 以下示範皆為使用本地編譯後的 image，再上去 portainer 去進行部屬以及環境變數調整
 
 #### 1. 基本操作
 - 執行 `docker build -t my-next-app .` 進行 image 編譯
 - 編譯後可 image list 內看到![alt text](readme-png/portainer-stack-image-main.jpg)
-- 把 [docker-compose-portainer-main](docker-compose-portainer-main.yml) 貼到 portainer stack 內
+- 把 [docker-compose-portainer-without-env.yml](docker-compose-portainer-without-env.yml) 貼到 portainer stack 內
+  - 由於 portainer 如果沒有上傳 .env file 或是在網站上 add env，無法使用`env_file:stack.env`，會有以下的錯誤
+    - `Failed to deploy a stack: failed to resolve services environment: env file /data/compose/14/stack.env not found: stat /data/compose/14/stack.env: no such file or directory`
 - 接著就可以進行 deploy stack
+- 啟動後可以到 `http://localhost:3000/index_basic` 檢查網站是否部署正常，以及 console 內是否有顯示 `email: env-email`
+  - `email`為非 NEXT_PUBLIC 開頭的變數，所以無法在 html 上呈現
+
+#### 2. 使用 api-router 去抓到 環境變數
+> :anguished: 由於先前已知 .env 的 NEXT_PUBLIC 都是編譯期決定，為了獲得動態環境變數，就是把 NEXT_PUBLIC 的變數都拿掉前綴，但這樣要怎麼正常顯示在 html 上呢
+
+其中一解使用 api-router
+
+### portainer + api-router
+
+> portainer stack 的 env 後面都會叫做 stack.env
+
+#### api-router
+1. 創建一個抓取 env 的方式 [env.ts](pages/api/env.ts)
+2. 在網站內調用 [index_api_router.tsx](pages/index_api_router.tsx)
+3. 本地啟動服務
+4. 可以看到正常抓到 env 內容，且不管有無 NEXT_PUBLIC 都可以抓到:clap::clap:
+  > :no_good: 缺點：由於使用 api_router，所以不能回傳敏感資訊，因為這段會是在 F12 內可以看到的 fetch 資訊
+
+![alt text](readme-png/index_api_router_fetch.jpg)
+
+#### 部署 portainer + 本地 .env
+1. 使用 [docker-compose-portainer-with-api-router.yml](docker-compose-portainer-with-api-router.yml) 創建 stack
+2. Load variables from .env file -> 上傳本地的 [.env](.env)
+3. deploy the stack
+4. 到 `http://localhost:3000/index_api_router` 看是否有正常抓到環境變數
+
+#### 部署 portainer + stack.env 環境變數修改
+1. 到 stack 內修改 stack.env 內容。點選 stack 進去後找到 Editor 頁，到下面展開 Environment variables 然後編輯如下圖
+![alt text](readme-png/portainer-stack-enviroment.jpg)
+2. 編輯後點選 `Update the stack` 就會重新部署
+3. 此時檢查是否網站有更新修改的環境變數
+4. 可以發現到 `沒有 NEXT_PUBLIC` 的有正常改變到

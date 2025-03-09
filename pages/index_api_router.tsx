@@ -14,22 +14,16 @@ const Home: React.FC = () => {
       .catch((error) => console.error('Error fetching environment variables:', error));
   }, []);
 
-  useEffect(() => {
-    fetch('/api/log-secret')
-      .then((response) => response.json())
-      .then((data) => console.log(data.message))
-      .catch((error) => console.error('Error logging SECRET_KEY:', error));
-  }, []);
-
   if (nextPublicEmail === null || email === null) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
-      <h1>NEXT_PUBLIC_EMAIL: {nextPublicEmail}</h1>
-      <h1>EMAIL: {email}</h1>
-      <h1>Check the server console for SECRET_KEY</h1>
+      <h1>index_api_router 使用 api_router 抓環境變數</h1>
+      <br />
+      <h2>NEXT_PUBLIC_EMAIL: {nextPublicEmail}</h2>
+      <h2>EMAIL: {email}</h2>
     </div>
   );
 };

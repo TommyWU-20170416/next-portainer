@@ -5,7 +5,5 @@ services:
     image: my-next-app:latest # 指定要運行的 image
     ports:
       - "3000:3000"
-    env_file:
-      - stack.env # 這邊是 portainer 的環境變數名稱
     environment:
       NODE_ENV: production
