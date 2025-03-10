@@ -18,6 +18,8 @@ RUN npm run build
 
 # Set the environment
 ENV NODE_ENV=production
+ENV NEXT_PUBLIC_EMAIL=dockerfile-NEXT_PUBLIC_EMAIL
+ENV email=dockerfile-email
 
 # Expose the port Next.js needs
 EXPOSE 3000
